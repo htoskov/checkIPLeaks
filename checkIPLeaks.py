@@ -17,14 +17,15 @@ def check_ip(original_ip):
         try:
             response = requests.get('https://api.ipify.org?format=json')
             current_ip = response.json().get('ip')
-            print(f"Current IP: {current_ip}")
+            print(f"[INFO]Current IP: {current_ip}")
 
             if current_ip == original_ip:
-                print(f"IP leak detected! Original IP equals checked IP: {current_ip}")
+                print(f"[WARNING]IP leak detected! Original IP equals checked IP: {current_ip}")
                 play_sound()
+                time.sleep(2)
                 break
 
-            time.sleep(0.1)
+            time.sleep(5)
         except Exception as e:
             print(f"An error occurred: {e}")
             break
@@ -34,10 +35,12 @@ def main():
     proxy_started = input("Is your proxy started? (yes/no): ").strip().lower()
 
     if proxy_started == 'yes':
-        print("Starting IP check...")
+        print("[INFO]Starting IP check...")
         check_ip(original_ip)
     else:
-        print("Proxy not started. Exiting.")
+        print("[INFO]Proxy not started. Exiting.")
+        time.sleep(3)
+        quit
 
 if __name__ == "__main__":
     main()
